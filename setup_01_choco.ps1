@@ -20,4 +20,8 @@ trap {
     exit 1
 }
 
+if ( -not ( Test-Path $profile )) {
+    echo "" >$profile
+}
+
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))

@@ -25,24 +25,27 @@ trap {
 }
 
 #--- Windows Settings ---
-Disable-BingSearch
-Disable-GameBarTips
+#Disable-BingSearch
+#Disable-GameBarTips
 
-Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowFileExtensions
-Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -Lock
-Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -AlwaysShowIconsOn
+#Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowFileExtensions
+#Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -Lock
+#Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -AlwaysShowIconsOn
 
 #--- Windows Subsystems/Features ---
-choco install Microsoft-Hyper-V-All -source windowsFeatures
-choco install Microsoft-Windows-Subsystem-Linux -source windowsfeatures
+#choco install Microsoft-Hyper-V-All -source windowsFeatures
+#choco install Microsoft-Windows-Subsystem-Linux -source windowsfeatures
+
+choco install -y vcredist-all
 
 #--- Tools ---
-choco install git -params '"/GitAndUnixToolsOnPath /WindowsTerminal"' -y
-choco install sysinternals -y
-choco install vim
+choco install -y git -params '"/GitAndUnixToolsOnPath /WindowsTerminal"'
+choco install -y sysinternals -y
+choco install -y vim
+choco install -y notepadplusplus
 
 #--- Apps ---
-choco install googlechrome
+choco install -y googlechrome
 
 #--- Uninstall unecessary applications that come with Windows out of the box ---
 
@@ -205,8 +208,8 @@ If (-Not (Test-Path "HKCU:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Adv
 Set-ItemProperty -Path "HKCU:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" -Name PeopleBand -Type DWord -Value 0
 
 #--- Restore Temporary Settings ---
-Enable-MicrosoftUpdate
-Install-WindowsUpdate -acceptEula
+#Enable-MicrosoftUpdate
+#Install-WindowsUpdate -acceptEula
 
 #--- Rename the Computer ---
 # Requires restart, or add the -Restart flag

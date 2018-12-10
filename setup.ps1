@@ -28,9 +28,6 @@ Set-ExecutionPolicy RemoteSigned -Force
 
 #---- TEMPORARY ---
 Disable-UAC
-
-#--- Fonts ---
-choco install inconsolata -y
   
 #--- Windows Settings ---
 Disable-BingSearch

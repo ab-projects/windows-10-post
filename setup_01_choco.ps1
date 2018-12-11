@@ -21,7 +21,11 @@ trap {
 }
 
 if ( -not ( Test-Path $profile )) {
-    echo "" >$profile
+    $profile_path = Split-Path -Parent $profile
+    if ( -not ( Test-Path $profile_path )) {
+        New-Item -ItemType directory -Path $profile_path
+    }
+    New-Item -ItemType file -Path $profile
 }
 
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))

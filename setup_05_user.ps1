@@ -50,4 +50,4 @@ If (-Not (Test-Path "HKCU:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Adv
 }
 Set-ItemProperty -Path "HKCU:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" -Name PeopleBand -Type DWord -Value 0
 
-Remove-Item $env:USERPROFILE"\3D Objects"
+Remove-Item -Rec -Fo $env:USERPROFILE"\3D Objects"

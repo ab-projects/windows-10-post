@@ -144,7 +144,7 @@ Get-AppxPackage *getstarted* | Remove-AppxPackage
 Get-AppxPackage *king.com.* | Remove-AppxPackage
 Get-AppxPackage *officehub* | Remove-AppxPackage
 Get-AppxPackage *onenote* | Remove-AppxPackage
-Get-AppxPackage *people* | Remove-AppxPackage
+#Get-AppxPackage *people* | Remove-AppxPackage
 Get-AppxPackage *skypeapp* | Remove-AppxPackage
 Get-AppxPackage *solitairecollection* | Remove-AppxPackage
 Get-AppxPackage *soundrecorder* | Remove-AppxPackage
@@ -154,7 +154,7 @@ Get-AppxPackage *windowscommunicationsapps* | Remove-AppxPackage
 Get-AppxPackage *windowsmaps* | Remove-AppxPackage
 Get-AppxPackage *windowsphone* | Remove-AppxPackage
 Get-AppxPackage *windowsstore* | Remove-AppxPackage
-Get-AppxPackage *xbox* | Remove-AppxPackage
+#Get-AppxPackage *xbox* | Remove-AppxPackage
 Get-AppxPackage *zunemusic* | Remove-AppxPackage
 Get-AppxPackage *zunevideo* | Remove-AppxPackage
 Get-AppxPackage Microsoft.MicrosoftOfficeHub | Remove-AppxPackage
@@ -165,10 +165,17 @@ Get-AppxPackage Microsoft.WindowsFeedbackHub | Remove-AppxPackage
 # See Remove default Apps from Windows 10 https://thomas.vanhoutte.be/miniblog/delete-windows-10-apps/
 # See Debloat Windows 10 https://github.com/W4RH4WK/Debloat-Windows-10
 # Command line to list all packages: Get-AppxPackage -AllUsers | Select Name, PackageFullName
+#
 
-Get-AppxPackage Microsoft.Windows.ParentalControls | Remove-AppxPackage
+# won't work on 1809
+# "Microsoft.Windows.PeopleExperienceHost_10.0.17763.1_neutral_neutral_cw5n1h2txyewy"
+# "Microsoft.XboxGameCallableUI_1000.17763.1.0_neutral_neutral_cw5n1h2txyewy" 
+# "Microsoft.Windows.ParentalControls_1000.17763.1.0_neutral_neutral_cw5n1h2txyewy"
+# "Microsoft.Windows.Cortana_1.11.5.17763_neutral_neutral_cw5n1h2txyewy"
+
+#Get-AppxPackage Microsoft.Windows.ParentalControls | Remove-AppxPackage
 Get-AppxPackage Windows.ContactSupport | Remove-AppxPackage
-Get-AppxPackage Microsoft.Xbox* | Remove-AppxPackage
+#Get-AppxPackage Microsoft.Xbox* | Remove-AppxPackage
 Get-AppxPackage microsoft.windowscommunicationsapps | Remove-AppxPackage # Mail and Calendar
 #Get-AppxPackage Microsoft.Windows.Photos | Remove-AppxPackage
 Get-AppxPackage Microsoft.WindowsCamera | Remove-AppxPackage
@@ -180,8 +187,8 @@ Get-AppxPackage Microsoft.Office.OneNote | Remove-AppxPackage
 Get-AppxPackage Microsoft.Office.Sway | Remove-AppxPackage
 Get-AppxPackage Microsoft.Appconnector | Remove-AppxPackage
 Get-AppxPackage Microsoft.WindowsFeedback* | Remove-AppxPackage
-Get-AppxPackage Microsoft.Windows.FeatureOnDemand.InsiderHub | Remove-AppxPackage
-Get-AppxPackage Microsoft.Windows.Cortana | Remove-AppxPackage
+#Get-AppxPackage Microsoft.Windows.FeatureOnDemand.InsiderHub | Remove-AppxPackage
+#Get-AppxPackage Microsoft.Windows.Cortana | Remove-AppxPackage
 Get-AppxPackage Microsoft.People | Remove-AppxPackage
 Get-AppxPackage Microsoft.Bing* | Remove-AppxPackage # Money, Sports, News, Finance and Weather
 Get-AppxPackage Microsoft.Getstarted | Remove-AppxPackage
@@ -193,11 +200,11 @@ Get-AppxPackage Microsoft.Messaging | Remove-AppxPackage
 Get-AppxPackage Microsoft.CommsPhone | Remove-AppxPackage
 Get-AppxPackage Microsoft.Advertising.Xaml | Remove-AppxPackage
 Get-AppxPackage Microsoft.Windows.SecondaryTileExperience | Remove-AppxPackage
-Get-AppxPackage Microsoft.Windows.ParentalControls | Remove-AppxPackage
-Get-AppxPackage Microsoft.Windows.ContentDeliveryManager | Remove-AppxPackage
-Get-AppxPackage Microsoft.Windows.CloudExperienceHost | Remove-AppxPackage
-Get-AppxPackage Microsoft.Windows.ShellExperienceHost | Remove-AppxPackage
-Get-AppxPackage Microsoft.BioEnrollment | Remove-AppxPackage
+#Get-AppxPackage Microsoft.Windows.ParentalControls | Remove-AppxPackage
+#Get-AppxPackage Microsoft.Windows.ContentDeliveryManager | Remove-AppxPackage
+#Get-AppxPackage Microsoft.Windows.CloudExperienceHost | Remove-AppxPackage
+#Get-AppxPackage Microsoft.Windows.ShellExperienceHost | Remove-AppxPackage
+#Get-AppxPackage Microsoft.BioEnrollment | Remove-AppxPackage
 Get-AppxPackage Microsoft.OneConnect | Remove-AppxPackage
 Get-AppxPackage *Twitter* | Remove-AppxPackage
 Get-AppxPackage king.com.CandyCrushSodaSaga | Remove-AppxPackage
@@ -213,5 +220,5 @@ C:\Windows\SysWOW64\OneDriveSetup.exe /uninstall
 
 #Then type in either
 #%SystemRoot%\System32\OneDriveSetup.exe /uninstall
-#if you’re using 32-bit Windows 10 or
+#if you're using 32-bit Windows 10 or
 #%SystemRoot%\SysWOW64\OneDriveSetup.exe /uninstall

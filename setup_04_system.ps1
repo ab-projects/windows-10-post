@@ -52,7 +52,7 @@ Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection 
 Get-Service DiagTrack,Dmwappushservice | Stop-Service | Set-Service -StartupType Disabled
 
 # Lock screen (not sleep) on lid close
-Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power' -Name AwayModeEnabled -Type DWord -Value 1
+#Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power' -Name AwayModeEnabled -Type DWord -Value 1
 
 #--- Rename the Computer ---
 # Requires restart, or add the -Restart flag

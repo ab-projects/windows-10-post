@@ -40,6 +40,7 @@ Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Print3D
 Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.ScreenSketch" } | Remove-AppxProvisionedPackage -Online
 Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.SkypeApp" } | Remove-AppxProvisionedPackage -Online
 Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.VP9VideoExtensions" } | Remove-AppxProvisionedPackage -Online
+Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Wallet*" } | Remove-AppxProvisionedPackage -Online
 Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.WebMediaExtensions" } | Remove-AppxProvisionedPackage -Online
 Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.WebpImageExtension" } | Remove-AppxProvisionedPackage -Online
 Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.WindowsMaps" } | Remove-AppxProvisionedPackage -Online
@@ -76,6 +77,7 @@ Get-AppxPackage -AllUsers "Microsoft.Services.Store.Engagement*" | Remove-AppxPa
 Get-AppxPackage -AllUsers "Microsoft.Services.Store.Engagement*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.SkypeApp*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.VP9VideoExtensions*" | Remove-AppxPackage
+Get-AppxPackage -AllUsers "Microsoft.Wallet*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.WebMediaExtensions*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.WebpImageExtension*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.WindowsMaps*" | Remove-AppxPackage

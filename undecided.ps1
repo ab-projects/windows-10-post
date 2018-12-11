@@ -1,37 +1,12 @@
 
-Get-AppxPackage -AllUsers Microsoft.Xbox* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.WindowsFeedbackHub* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.3DBuilder* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.Bing* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.GetHelp* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.Messaging* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.Microsoft3DViewer* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.MicrosoftOfficeHub* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.MicrosoftSolitaireCollection* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.Office.OneNote* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.SkypeApp* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.Wallet* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.WindowsCamera* | Remove-AppxPackage
-Get-AppxPackage -AllUsers microsoft.windowscommunicationsapps* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.WindowsMaps* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.WindowsSoundRecorder* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.OneConnect | Remove-AppxPackage
-Get-AppxPackage -AllUsers *.LinkedInforWindows | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.ZuneVideo* | Remove-AppxPackage
-Get-AppxPackage -AllUsers Microsoft.Getstarted* | Remove-AppxPackage
-
 
 # Now actually uninstall the apps
-Get-AppxPackage -allusers *getstarted* | Remove-AppxPackage
-Get-AppxPackage -allusers *solitairecollection* | Remove-AppxPackage
 Get-AppxPackage -allusers *CandyCrushSodaSaga* | Remove-AppxPackage
 Get-AppxPackage -allusers *Minecraft* | Remove-AppxPackage
 Get-AppxPackage -allusers *3dbuilder* | Remove-AppxPackage
 Get-AppxPackage -allusers *windowsalarms* | Remove-AppxPackage
 Get-AppxPackage -allusers *windowscamera* | Remove-AppxPackage
 Get-AppxPackage -allusers *windowsmaps* | Remove-AppxPackage
-Get-AppxPackage -allusers *WindowsFeedbackHub* | Remove-AppxPackage
-Get-AppxPackage -allusers *WindowsSoundRecorder* | Remove-AppxPackage
 Get-AppxPackage -allusers *bingfinance* | Remove-AppxPackage
 Get-AppxPackage -allusers *bingnews* | Remove-AppxPackage
 Get-AppxPackage -allusers *bingsports* | Remove-AppxPackage
@@ -43,7 +18,6 @@ Get-AppxPackage -allusers *zunemusic* | Remove-AppxPackage
 Get-AppxPackage -allusers *zunevideo* | Remove-AppxPackage
 Get-AppxPackage -allusers *soundrecorder* | Remove-AppxPackage
 Get-AppxPackage -allusers *NetworkSpeedTest* | Remove-AppxPackage
-Get-AppxPackage -allusers *MicrosoftStickyNotes* | Remove-AppxPackage
 Get-AppxPackage -allusers *EclipseManager* | Remove-AppxPackage
 Get-AppxPackage -allusers *ActiproSoftwareLLC* | Remove-AppxPackage
 Get-AppxPackage -allusers *MicrosoftPowerBIForWindows* | Remove-AppxPackage
@@ -56,7 +30,6 @@ Get-AppxPackage -allusers *XboxIdentityProvider* | Remove-AppxPackage
 Get-AppxPackage -allusers *windowsphone* | Remove-AppxPackage
 Get-AppxPackage -allusers *CommsPhone* | Remove-AppxPackage
 Get-AppxPackage -allusers *Phone* | Remove-AppxPackage
-Get-AppxPackage -allusers *windowscommunicationsapps* | Remove-AppxPackage
 Get-AppxPackage -allusers *communicationsapps* | Remove-AppxPackage
 Get-AppxPackage -allusers *Messaging* | Remove-AppxPackage
 Get-AppxPackage -allusers *connect* | Remove-AppxPackage
@@ -68,9 +41,6 @@ Get-AppxPackage -allusers *bing* | Remove-AppxPackage
 Get-AppxPackage -allusers *one* | Remove-AppxPackage
 Get-AppxPackage -allusers *xbox* | Remove-AppxPackage
 
-
-Disable-WindowsOptionalFeature -FeatureName "WindowsMediaPlayer" -Online
-Disable-WindowsOptionalFeature -FeatureName "SearchEngine-Client-Package" -Online
 
 #Get-Appxpackage -allusers *HolographicFirstRun* | remove-appxpackage
 

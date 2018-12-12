@@ -21,10 +21,11 @@ trap {
     exit 1
 }
 
+# preparation
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Install-Module -Name PSWindowsUpdate -Force
 
-Install-Module PSWindowsUpdate
-Get-Command –module PSWindowsUpdate
-
+# this can't be automated (yet)
 Add-WUServiceManager -ServiceID "7971f918-a847-4430-9279-4a52d1efe18d"
 
-Get-WUInstall –MicrosoftUpdate –AcceptAll –AutoReboot
+Get-WUInstall -MicrosoftUpdate -AcceptAll -AutoReboot

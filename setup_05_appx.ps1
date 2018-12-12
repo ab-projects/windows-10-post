@@ -80,3 +80,28 @@ foreach ($appx_package_glob in $to_remove) {
     }
     $appx_packages | Remove-AppxPackage
 }
+
+$to_add = @(
+    "Microsoft.DesktopAppInstaller*",
+    "Microsoft.HEIFImageExtension*",
+    "Microsoft.MSPaint*",
+    "Microsoft.MicrosoftStickyNotes*",
+    "Microsoft.ScreenSketch*",
+    "Microsoft.StorePurchaseApp*",
+    "Microsoft.VP9VideoExtensions*",
+    "Microsoft.WebMediaExtensions*",
+    "Microsoft.WebpImageExtension*",
+    "Microsoft.Windows.Photos*",
+    "Microsoft.WindowsAlarms*",
+    "Microsoft.WindowsCalculator*",
+    "Microsoft.WindowsCamera*",
+    "Microsoft.WindowsSoundRecorder*",
+    "Microsoft.WindowsStore*"
+)
+
+foreach ($appx_package_glob in $to_add) {
+    if ((Get-AppxPackage -AllUsers $appx_package_glob).Name -notlike $appx_package_glob) {
+        throw "Can't find '${appx_package_glob}'"
+    }
+    Write-Output "Confirmed '${appx_package_glob}' is available"
+}

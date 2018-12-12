@@ -143,7 +143,7 @@ $to_disable = @(
     "Windows-Identity-Foundation",
     "WorkFolders-Client"
 )
-foreach($feature in $to_disable) {
+foreach ($feature in $to_disable) {
     Write-Output "Disabling Windows Optional Feature '${feature}'"
     Disable-WindowsOptionalFeature -FeatureName $feature -Online -NoRestart
 }
@@ -166,7 +166,7 @@ $to_enable = @(
     "WCF-TCP-PortSharing45",
     "Windows-Defender-Default-Definitions"
 )
-foreach($feature in $to_enable) {
+foreach ($feature in $to_enable) {
     Write-Output "Enabling Windows Optional Feature '${feature}'"
     Enable-WindowsOptionalFeature -FeatureName $feature -Online -NoRestart -All
 }

@@ -28,14 +28,14 @@ $to_disable = @(
     "Hello.Face.Migration.17658~~~~0.0.1.0",
     "Media.WindowsMediaPlayer~~~~0.0.12.0"
 )
-foreach($capability in $to_disable) {
+foreach ($capability in $to_disable) {
     Write-Output "Removing Windows Capability '${capability}'"
     Remove-WindowsCapability -Name $capability -Online
 }
 
 $to_enable = @(
 )
-foreach($capability in $to_enable) {
+foreach ($capability in $to_enable) {
     Write-Output "Adding Windows Capability '${capability}'"
     Add-WindowsCapability -Name $capability -Online
 }

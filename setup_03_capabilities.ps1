@@ -29,6 +29,9 @@ $to_disable = @(
     "Media.WindowsMediaPlayer~~~~0.0.12.0"
 )
 foreach ($capability in $to_disable) {
+    if ( (Get-WindowsCapability -Name $capability -Online).Name -ne $capability ) {
+        throw "Can't find '${capability}'"
+    }
     Write-Output "Removing Windows Capability '${capability}'"
     Remove-WindowsCapability -Name $capability -Online
 }

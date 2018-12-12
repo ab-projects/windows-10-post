@@ -21,7 +21,15 @@ trap {
     exit 1
 }
 
+# system level
 choco install -y vcredist-all
+
+# tools level
+# sysinternals installation needs to be done on a safe path
+Set-Location C:\ | Out-Null
 choco install -y sysinternals
+Set-Location $myExecDir | Out-Null
+
+# apps level
 choco install -y googlechrome
 choco install -y git --params '"/GitAndUnixToolsOnPath /WindowsTerminal /NoAutoCrlf /NoShellIntegration /SChannel /NoCredentialManager"'

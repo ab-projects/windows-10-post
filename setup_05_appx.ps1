@@ -26,11 +26,12 @@ trap {
 
 # order matters because of dependencies
 $to_remove = @(
+    "Microsoft.3DBuilder*",
     "Microsoft.BingWeather*",
     "Microsoft.GetHelp*",
     "Microsoft.Getstarted*",
-    "Microsoft.HEIFImageExtension*",
     "Microsoft.Messaging*",
+    "Microsoft.Microsoft3DViewer*",
     "Microsoft.MicrosoftOfficeHub*",
     "Microsoft.MicrosoftSolitaireCollection*",
     "Microsoft.MixedReality.Portal*",
@@ -38,13 +39,10 @@ $to_remove = @(
     "Microsoft.OneConnect*",
     "Microsoft.People*",
     "Microsoft.Print3D*",
-    "Microsoft.ScreenSketch*",
     "Microsoft.Services.Store.Engagement*",
     "Microsoft.SkypeApp*",
-    "Microsoft.VP9VideoExtensions*",
     "Microsoft.Wallet*",
-    "Microsoft.WebMediaExtensions*",
-    "Microsoft.WebpImageExtension*",
+    "Microsoft.WindowsFeedbackHub*",
     "Microsoft.WindowsMaps*",
     "Microsoft.WindowsSoundRecorder*",
     "Microsoft.Xbox.TCUI*",
@@ -57,6 +55,7 @@ $to_remove = @(
     "Microsoft.ZuneMusic*",
     "Microsoft.ZuneVideo*",
     "microsoft.windowscommunicationsapps*",
+    "4DF9E0F8.Netflix*",
     "Microsoft.Advertising.Xaml*"
 )
 

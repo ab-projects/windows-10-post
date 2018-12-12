@@ -24,71 +24,60 @@ trap {
 # Main documentantion:
 # https://docs.microsoft.com/en-US/windows/application-management/apps-in-windows-10
 
-# Prevent online provisioned AppxPackages from re-downloading themselves after uninstallation
+# order matters because of dependencies
+$to_remove = @(
+    "Microsoft.BingWeather*",
+    "Microsoft.GetHelp*",
+    "Microsoft.Getstarted*",
+    "Microsoft.HEIFImageExtension*",
+    "Microsoft.Messaging*",
+    "Microsoft.MicrosoftOfficeHub*",
+    "Microsoft.MicrosoftSolitaireCollection*",
+    "Microsoft.MixedReality.Portal*",
+    "Microsoft.Office.OneNote*",
+    "Microsoft.OneConnect*",
+    "Microsoft.People*",
+    "Microsoft.Print3D*",
+    "Microsoft.ScreenSketch*",
+    "Microsoft.Services.Store.Engagement*",
+    "Microsoft.SkypeApp*",
+    "Microsoft.VP9VideoExtensions*",
+    "Microsoft.Wallet*",
+    "Microsoft.WebMediaExtensions*",
+    "Microsoft.WebpImageExtension*",
+    "Microsoft.WindowsMaps*",
+    "Microsoft.WindowsSoundRecorder*",
+    "Microsoft.Xbox.TCUI*",
+    "Microsoft.XboxApp*",
+    "Microsoft.XboxGameOverlay*",
+    "Microsoft.XboxGamingOverlay*",
+    "Microsoft.XboxIdentityProvider*",
+    "Microsoft.XboxSpeechToTextOverlay*",
+    "Microsoft.YourPhone*",
+    "Microsoft.ZuneMusic*",
+    "Microsoft.ZuneVideo*",
+    "microsoft.windowscommunicationsapps*",
+    "Microsoft.Advertising.Xaml*"
+)
 
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.BingWeather*" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.GetHelp*" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Getstarted*" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.HEIFImageExtension*" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Messaging*" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.MicrosoftOfficeHub" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.MicrosoftSolitaireCollection" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.MixedReality.Portal" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Office.OneNote" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.OneConnect" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.People" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Print3D" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.ScreenSketch" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.SkypeApp" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.VP9VideoExtensions" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Wallet*" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.WebMediaExtensions" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.WebpImageExtension" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.WindowsMaps" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.WindowsSoundRecorder" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Xbox.TCUI" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.XboxApp" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.XboxGameOverlay" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.XboxGamingOverlay" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.XboxIdentityProvider" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.XboxSpeechToTextOverlay" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.YourPhone" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.ZuneMusic" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.ZuneVideo" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "microsoft.windowscommunicationsapps" } | Remove-AppxProvisionedPackage -Online
+foreach ($appx_package_glob in $to_remove) {
+    Write-Output "Removing Appx packages based on glob '${appx_package_glob}'"
 
-# Actually uninstall the AppxPackages (order matters because of dependencies)
+    # Prevent provisioned AppxPackage from re-downloading themselve after uninstallation
+    $provision_appx_packages = Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like $appx_package_glob } 
+    Write-Output "Removing provisioning of Appx packages:"
+    foreach ($pkg in $provision_appx_packages) {
+        $name = $pkg.PackageName
+        Write-Output "* $name"
+    }
+    $provision_appx_packages | Remove-AppxProvisionedPackage -Online
 
-Get-AppxPackage -AllUsers "Microsoft.Advertising.Xaml*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.BingWeather*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.GetHelp*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.Getstarted*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.HEIFImageExtension*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.Messaging*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.MicrosoftOfficeHub*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.MicrosoftSolitaireCollection*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.MixedReality.Portal*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.Office.OneNote*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.OneConnect*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.People*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.Print3D*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.ScreenSketch*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.Services.Store.Engagement*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.Services.Store.Engagement*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.SkypeApp*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.VP9VideoExtensions*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.Wallet*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.WebMediaExtensions*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.WebpImageExtension*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.WindowsMaps*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.WindowsSoundRecorder*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.Xbox.TCUI*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.XboxApp*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.XboxGameOverlay*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.XboxGamingOverlay*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.XboxIdentityProvider*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.XboxSpeechToTextOverlay*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.YourPhone*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.ZuneMusic*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.ZuneVideo*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "microsoft.windowscommunicationsapps*" | Remove-AppxPackage
+    # Actually uninstall the AppxPackage
+    $appx_packages = Get-AppxPackage -AllUsers $appx_package_glob
+    Write-Output "Removing of Appx packages:"
+    foreach ($pkg in $appx_packages) {
+        $name = $pkg.PackageFullName
+        Write-Output "* $name"
+    }
+    $appx_packages | Remove-AppxPackage
+}

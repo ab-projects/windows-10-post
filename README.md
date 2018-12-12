@@ -1,7 +1,5 @@
-# windows-10-post
+# Windows 10 Post Install
 
-Windows 10 Post Install
+At the moment this is targeted at *Windows 10 Professional build 17763 German x64*.
 
-This is based on https://gist.github.com/jessfraz/7c319b046daa101a4aaef937a20ff41f
-
-At the moment this is targeted at *Windows 10 Professional build 17763 German x64
+Before any script can be run, you need (in an elevated PowerShell) to `Set-ExecutionPolicy RemoteSigned` and accept with `A` and <kbd>Enter</kbd>.

@@ -27,10 +27,10 @@ trap {
 # Prevent online provisioned AppxPackages from re-downloading themselves after uninstallation
 
 Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.BingWeather*" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.GetHelp" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Getstarted" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.HEIFImageExtension" } | Remove-AppxProvisionedPackage -Online
-Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Messaging" } | Remove-AppxProvisionedPackage -Online
+Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.GetHelp*" } | Remove-AppxProvisionedPackage -Online
+Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Getstarted*" } | Remove-AppxProvisionedPackage -Online
+Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.HEIFImageExtension*" } | Remove-AppxProvisionedPackage -Online
+Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.Messaging*" } | Remove-AppxProvisionedPackage -Online
 Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.MicrosoftOfficeHub" } | Remove-AppxProvisionedPackage -Online
 Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.MicrosoftSolitaireCollection" } | Remove-AppxProvisionedPackage -Online
 Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "Microsoft.MixedReality.Portal" } | Remove-AppxProvisionedPackage -Online
@@ -59,15 +59,14 @@ Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like "microsoft.windows
 
 # Actually uninstall the AppxPackages (order matters because of dependencies)
 
-Get-AppxPackage -AllUsers "Microsoft.BingWeather*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "Microsoft.MicrosoftSolitaireCollection*" | Remove-AppxPackage
-Get-AppxPackage -AllUsers "microsoft.windowscommunicationsapps*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.Advertising.Xaml*" | Remove-AppxPackage
+Get-AppxPackage -AllUsers "Microsoft.BingWeather*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.GetHelp*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.Getstarted*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.HEIFImageExtension*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.Messaging*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.MicrosoftOfficeHub*" | Remove-AppxPackage
+Get-AppxPackage -AllUsers "Microsoft.MicrosoftSolitaireCollection*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.MixedReality.Portal*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.Office.OneNote*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.OneConnect*" | Remove-AppxPackage
@@ -92,3 +91,4 @@ Get-AppxPackage -AllUsers "Microsoft.XboxSpeechToTextOverlay*" | Remove-AppxPack
 Get-AppxPackage -AllUsers "Microsoft.YourPhone*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.ZuneMusic*" | Remove-AppxPackage
 Get-AppxPackage -AllUsers "Microsoft.ZuneVideo*" | Remove-AppxPackage
+Get-AppxPackage -AllUsers "microsoft.windowscommunicationsapps*" | Remove-AppxPackage

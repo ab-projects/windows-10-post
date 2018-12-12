@@ -16,6 +16,7 @@ $ErrorActionPreference = "Stop"
 
 # Any throw comes through here
 trap {
+    Set-Location $myExecDir | Out-Null
     $oldForegroundColor = $host.ui.RawUI.ForegroundColor
     $host.ui.RawUI.ForegroundColor = "Red"
     $line = $_.InvocationInfo.ScriptLineNumber

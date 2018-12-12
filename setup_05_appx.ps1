@@ -62,7 +62,7 @@ $to_remove = @(
 foreach ($appx_package_glob in $to_remove) {
     Write-Output "Removing Appx packages based on glob '${appx_package_glob}'"
 
-    # Prevent provisioned AppxPackage from re-downloading themselve after uninstallation
+    # Removing provisioning for new users
     $provision_appx_packages = Get-AppxProvisionedPackage -Online | ? { $_.PackageName -like $appx_package_glob } 
     Write-Output "Removing provisioning of Appx packages:"
     foreach ($pkg in $provision_appx_packages) {
@@ -71,7 +71,7 @@ foreach ($appx_package_glob in $to_remove) {
     }
     $provision_appx_packages | Remove-AppxProvisionedPackage -Online
 
-    # Actually uninstall the AppxPackage
+    # Remove package for all users
     $appx_packages = Get-AppxPackage -AllUsers $appx_package_glob
     Write-Output "Removing of Appx packages:"
     foreach ($pkg in $appx_packages) {

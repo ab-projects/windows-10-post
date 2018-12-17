@@ -1,22 +1,27 @@
-Function DisableCortana
-{  
-    $path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search"    
-    IF(!(Test-Path -Path $path)) { 
-        New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "Windows Search"
-    } 
-    Set-ItemProperty -Path $path -Name "AllowCortana" -Value 0 
-    #Restart Explorer to change it immediately    
-    Stop-Process -name explorer
-}
-DisableCortana
-
-# See How to Completely Uninstall OneDrive in Windows 10 http://lifehacker.com/how-to-completely-uninstall-onedrive-in-windows-10-1725363532
-taskkill /f /im OneDrive.exe
-C:\Windows\SysWOW64\OneDriveSetup.exe /uninstall
-
-#Then type in either
-#%SystemRoot%\System32\OneDriveSetup.exe /uninstall
-#if you're using 32-bit Windows 10 or
-#%SystemRoot%\SysWOW64\OneDriveSetup.exe /uninstall
-
 choco install inconsolata -y
+
+# Privacy and mitigaton settings
+# See: https://docs.microsoft.com/en-us/windows/privacy/manage-connections-from-windows-operating-system-components-to-microsoft-services
+
+# Logon script
+If ($InstallLogonScript -eq "true")
+{
+	. Logit "Copying Logon script to C:\Windows\Scripts"
+	If (!(Test-Path "C:\Windows\Scripts"))
+	{
+		New-Item "C:\Windows\Scripts" -ItemType Directory
+	}
+	Copy-Item -Path $PSScriptRoot\Logon.ps1 -Destination "C:\Windows\Scripts" -Force
+	# load default hive
+	Start-Process -FilePath "reg.exe" -ArgumentList "LOAD HKLM\DEFAULT C:\Users\Default\NTUSER.DAT"
+	# create RunOnce entries current / new user(s)
+	. Logit "Creating RunOnce entries..."
+	New-ItemProperty -Path "HKLM:\Default\Software\Microsoft\Windows\CurrentVersion\Runonce" -Name "Logon" -Value "Powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File C:\Windows\Scripts\Logon.ps1"
+	New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Runonce" -Name "Logon" -Value "Powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File C:\Windows\Scripts\Logon.ps1"
+	# unload default hive
+	Start-Process -FilePath "reg.exe" -ArgumentList "UNLOAD HKLM\DEFAULT"
+}
+
+echo "$env:PROGRAMDATA"
+
+$default_userprofile_path = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\" -Name Default).Default

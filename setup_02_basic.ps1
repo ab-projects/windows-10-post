@@ -29,6 +29,7 @@ choco install -y vcredist-all
 Set-Location C:\ | Out-Null
 choco install -y sysinternals
 Set-Location $myExecDir | Out-Null
+choco install -y 7zip
 
 # apps level
 choco install -y googlechrome

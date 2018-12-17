@@ -25,6 +25,8 @@ trap {
     exit 1
 }
 
+# TODO: Test this
+
 # WiFi Sense: HotSpot Sharing: Disable
 If (-Not (Test-Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting")) {
     New-Item -Path HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting | Out-Null

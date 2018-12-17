@@ -28,20 +28,21 @@ trap {
 # TODO: Test this
 
 # WiFi Sense: HotSpot Sharing: Disable
-If (-Not (Test-Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting")) {
-    New-Item -Path HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting | Out-Null
+$wifi_sense = "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting"
+if ( -not ( Test-Path $wifi_sense ) ) {
+    New-Item -Path $wifi_sense | Out-Null
 }
-Set-ItemProperty -Path HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting -Name value -Type DWord -Value 0
+Set-ItemProperty -Path $wifi_sense -Name value -Type DWord -Value 0
 
 # WiFi Sense: Shared HotSpot Auto-Connect: Disable
-Set-ItemProperty -Path HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots -Name value -Type DWord -Value 0
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" -Name value -Type DWord -Value 0
 
 # Disable Telemetry (requires a reboot to take effect)
-Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection -Name AllowTelemetry -Type DWord -Value 0
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name AllowTelemetry -Type DWord -Value 0
 Get-Service DiagTrack,Dmwappushservice | Stop-Service | Set-Service -StartupType Disabled
 
 #--- Rename the Computer ---
 # Requires restart, or add the -Restart flag
-if ($env:computername -ne $Computername) {
+if ( $env:computername -ne $Computername ) {
     Rename-Computer -NewName $Computername
 }

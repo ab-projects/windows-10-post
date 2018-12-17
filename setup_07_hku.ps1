@@ -86,6 +86,9 @@ Add-RegDWord $advanced_hku 'NavPaneShowAllFolders' 1
 Add-RegDWord $advanced_hkcu 'NavPaneShowAllFolders' 1
 Add-RegDWord $advanced_hku 'MMTaskbarMode' 2
 Add-RegDWord $advanced_hkcu 'MMTaskbarMode' 2
+# Change Explorer home screen back to "This PC"
+Add-RegDWord $advanced_hku 'LaunchTo' 1
+Add-RegDWord $advanced_hkcu 'LaunchTo' 1
 
 # Disable Xbox Gamebar
 Add-RegDWord "HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" 'AppCaptureEnabled' 0

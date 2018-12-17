@@ -104,7 +104,7 @@ Add-RegDWord $loc 'DisableLocation' 1
 Add-RegDWord $loc 'DisableLocationScripting' 1
 
 # Turn off the advertising ID
-Add-RegDWord 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo' 'DisabledByGroupPolicy' 1
+Add-RegDWord 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo' "Enabled" 0
 
 # Microsoft Edge
 $edge = 'HKLM:\SOFTWARE\Policies\Microsoft\MicrosoftEdge'

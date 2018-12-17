@@ -12,6 +12,8 @@ $ErrorActionPreference = "Stop"
 
 # Any throw comes through here
 trap {
+    reg unload 'HKU\DEFAULT'
+    Remove-PSDrive -Name HKU
     Set-Location $myExecDir | Out-Null
     $oldForegroundColor = $host.ui.RawUI.ForegroundColor
     $host.ui.RawUI.ForegroundColor = "Red"
@@ -20,6 +22,21 @@ trap {
     $host.ui.RawUI.ForegroundColor = $oldForegroundColor
     exit 1
 }
+
+# Easy HKU access
+New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
+
+# Get default user profile path
+$default_userprofile = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\" -Name Default).Default
+# Load default user hive
+reg load 'HKU\DEFAULT' (Join-Path $default_userprofile 'NTUSER.DAT')
+
+New-ItemProperty -Path 'HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' -Name 'PreInstalledAppsEnabled' -Value 0 -Force
+New-ItemProperty -Path 'HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' -Name 'OemPreInstalledAppsEnabled' -Value 0 -Force
+
+# unload default user hive
+reg unload 'HKU\DEFAULT'
+Remove-PSDrive -Name HKU
 
 # Privacy: Let apps use my advertising ID: Disable
 $adv_info = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo"

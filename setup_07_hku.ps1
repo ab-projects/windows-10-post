@@ -99,5 +99,7 @@ Add-RegDWord "HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Ad
 Add-RegDWord "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" 'PeopleBand' 0
 
 # unload default user hive
+[System.GC]::Collect()
 reg unload 'HKU\DEFAULT'
+
 Remove-PSDrive -Name HKU

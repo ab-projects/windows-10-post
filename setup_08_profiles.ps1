@@ -21,5 +21,12 @@ trap {
     exit 1
 }
 
+# Get default user profile path
+$default_userprofile = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList" -Name 'Default').Default
+
 # TODO: do this for default user profile too 
-Remove-Item -Recurse -Force $env:USERPROFILE"\3D Objects"
+Remove-Item -Recurse -Force (Join-Path $env:USERPROFILE '3D Objects')
+Remove-Item -Recurse -Force (Join-Path $default_userprofile '3D Objects')
+
+Remove-Item -Force (Join-Path $env:USERPROFILE 'Desktop\Microsoft Edge.lnk')
+Remove-Item -Force (Join-Path $default_userprofile 'Desktop\Microsoft Edge.lnk')

@@ -26,7 +26,16 @@ trap {
 
 # order matters because of dependencies
 $to_remove = @(
+    "*.FitbitCoach",
+    "*.Minecraft*"
+    "*.Netflix*",
+    "*.PhototasticCollage*",
+    "*.Twitter*",
+    "*.XING*",
     "Microsoft.3DBuilder*",
+    "Microsoft.BingFinance*",
+    "Microsoft.BingNews*",
+    "Microsoft.BingSports*",
     "Microsoft.BingWeather*",
     "Microsoft.GetHelp*",
     "Microsoft.Getstarted*",
@@ -36,10 +45,10 @@ $to_remove = @(
     "Microsoft.MicrosoftSolitaireCollection*",
     "Microsoft.MixedReality.Portal*",
     "Microsoft.Office.OneNote*",
+    "Microsoft.Office.Sway*",
     "Microsoft.OneConnect*",
     "Microsoft.People*",
     "Microsoft.Print3D*",
-    "Microsoft.Services.Store.Engagement*",
     "Microsoft.SkypeApp*",
     "Microsoft.Wallet*",
     "Microsoft.WindowsFeedbackHub*",
@@ -54,8 +63,8 @@ $to_remove = @(
     "Microsoft.YourPhone*",
     "Microsoft.ZuneMusic*",
     "Microsoft.ZuneVideo*",
+    "king.com.*",
     "microsoft.windowscommunicationsapps*",
-    "4DF9E0F8.Netflix*",
     "Microsoft.Advertising.Xaml*"
 )
 

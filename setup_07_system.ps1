@@ -25,8 +25,6 @@ trap {
     exit 1
 }
 
-# TODO: Test this
-
 # Completely uninstall OneDrive
 taskkill /f /im OneDrive.exe
 $one_drive_setup = Join-Path $env:SystemRoot "SysWOW64\OneDriveSetup.exe"
@@ -34,38 +32,9 @@ if ( Test-Path $one_drive_setup ) {
     & $one_drive_setup /uninstall
 }
 
-$consumer_features = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent'
-if ( -not ( Test-Path $consumer_features ) ) {
-    New-Item -Path $consumer_features | Out-Null
-}
-New-ItemProperty -Path $consumer_features -Name DisableWindowsConsumerFeatures -PropertyType DWORD -Value '1' -Force
-
-# Disabling Microsoft Edge desktop icon creation
-$exp = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer'
-New-ItemProperty -Path $exp -Name 'Explorer' -PropertyType DWORD -Value '1' -Force
-New-ItemProperty -Path $exp -Name 'DisableEdgeDesktopShortcutCreation' -PropertyType DWORD -Value '1' -Force
-
-# Disabling New Network Dialog
-New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Network' -Name 'NewNetworkWindowOff' -Force
-
-# WiFi Sense: HotSpot Sharing: Disable
-$wifi_sense = "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting"
-if ( -not ( Test-Path $wifi_sense ) ) {
-    New-Item -Path $wifi_sense | Out-Null
-}
-Set-ItemProperty -Path $wifi_sense -Name value -Type DWORD -Value 0
-
-# WiFi Sense: Shared HotSpot Auto-Connect: Disable
-Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" -Name value -Type DWORD -Value 0
-
-# Disable all feedback notifications
-New-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection' -Name DoNotShowFeedbackNotifications -PropertyType DWORD -Value '1' -Force
-
-# Disable telemetry (requires a reboot to take effect)
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name AllowTelemetry -Type DWORD -Value 0
-Get-Service DiagTrack, Dmwappushservice | Stop-Service | Set-Service -StartupType Disabled
-
 # Disable some services
+# Telemetry
+Get-Service DiagTrack, Dmwappushservice | Stop-Service | Set-Service -StartupType Disabled
 # Microsoft Account Sign-in Assistant
 Get-Service wlidsvc | Stop-Service | Set-Service -StartupType Disabled
 # Windows Error Reporting Service
@@ -109,7 +78,6 @@ Disable-ScheduledTask -TaskName "\Microsoft\Windows\Shell\FamilySafetyMonitor"
 Disable-ScheduledTask -TaskName "\Microsoft\Windows\Shell\FamilySafetyRefreshTask"
 Disable-ScheduledTask -TaskName "\Microsoft\Windows\WDI\ResolutionHost"
 Disable-ScheduledTask -TaskName "\Microsoft\Windows\Windows Error Reporting\QueueReporting"
-Disable-ScheduledTask -TaskName "\Microsoft\Windows\Windows Media Sharing\UpdateLibrary"
 
 #--- Rename the Computer ---
 # Requires restart, or add the -Restart flag

@@ -24,7 +24,6 @@ If ($InstallLogonScript -eq "true")
 
 echo "$env:PROGRAMDATA"
 
-$default_userprofile_path = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\" -Name Default).Default
 
 
 

@@ -4,7 +4,7 @@
 param(
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = 'Stop'
 
 [string] $myName = $MyInvocation.MyCommand.Name
 [string] $myParentDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
@@ -14,7 +14,7 @@ $ErrorActionPreference = "Stop"
 trap {
     Set-Location $myExecDir | Out-Null
     $oldForegroundColor = $host.ui.RawUI.ForegroundColor
-    $host.ui.RawUI.ForegroundColor = "Red"
+    $host.ui.RawUI.ForegroundColor = 'Red'
     $line = $_.InvocationInfo.ScriptLineNumber
     Write-Output "${myName}: ERROR: ${line}: $_"
     $host.ui.RawUI.ForegroundColor = $oldForegroundColor
@@ -43,12 +43,12 @@ function Add-RegDWord {
 Add-RegDWord 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications' 'NoCloudApplicationNotification'
 
 # Disable Cortana
-$s = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search"
-Add-RegDWord $s "AllowCortana" 1
-Add-RegDWord $s "AllowSearchToUseLocation" 0
-Add-RegDWord $s "ConnectedSearchPrivacy" 3
-Add-RegDWord $s "ConnectedSearchUseWeb" 0
-Add-RegDWord $s "DisableWebSearch" 1
+$s = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search'
+Add-RegDWord $s 'AllowCortana' 1
+Add-RegDWord $s 'AllowSearchToUseLocation' 0
+Add-RegDWord $s 'ConnectedSearchPrivacy' 3
+Add-RegDWord $s 'ConnectedSearchUseWeb' 0
+Add-RegDWord $s 'DisableWebSearch' 1
 
 # Disabling Microsoft Edge desktop icon creation
 Add-RegDWord 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer' 'DisableEdgeDesktopShortcutCreation'
@@ -104,19 +104,19 @@ Add-RegDWord $loc 'DisableLocation' 1
 Add-RegDWord $loc 'DisableLocationScripting' 1
 
 # Turn off the advertising ID
-Add-RegDWord 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo' "Enabled" 0
+Add-RegDWord 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo' 'Enabled' 0
 
 # Microsoft Edge
 $edge = 'HKLM:\SOFTWARE\Policies\Microsoft\MicrosoftEdge'
 # Configure Do Not Track
 Add-RegDWord (Join-Path $edge 'Main') 'DoNotTrack'
 # Configure Autofill
-New-ItemProperty -Path (Join-Path $edge 'Main') -Name "Use FormSuggest" -Value 'no' -Force
+New-ItemProperty -Path (Join-Path $edge 'Main') -Name 'Use FormSuggest' -Value 'no' -Force
 # Configure Password Manager
-New-ItemProperty -Path (Join-Path $edge 'Main') -Name "FormSuggest Passwords" -Value 'no' -Force
+New-ItemProperty -Path (Join-Path $edge 'Main') -Name 'FormSuggest Passwords' -Value 'no' -Force
 # Configure search suggestions in Address bar
-Add-RegDWord (Join-Path $edge 'SearchScopes') "ShowSearchSuggestionsGlobal" 0
+Add-RegDWord (Join-Path $edge 'SearchScopes') 'ShowSearchSuggestionsGlobal' 0
 # Allow web content on New Tab page
 Add-RegDWord (Join-Path $edge 'SearchScopes') 'AllowWebContentOnNewTabPage' 0
 # Configure corporate Home pages
-Add-RegDWord (Join-Path $edge 'ServiceUI') "ProvisionedHomePages" 0
+Add-RegDWord (Join-Path $edge 'ServiceUI') 'ProvisionedHomePages' 0

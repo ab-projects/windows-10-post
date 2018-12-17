@@ -95,7 +95,6 @@ $to_add = @(
     "Microsoft.WindowsAlarms*",
     "Microsoft.WindowsCalculator*",
     "Microsoft.WindowsCamera*",
-    "Microsoft.WindowsSoundRecorder*",
     "Microsoft.WindowsStore*"
 )
 

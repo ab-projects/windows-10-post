@@ -25,3 +25,7 @@ If ($InstallLogonScript -eq "true")
 echo "$env:PROGRAMDATA"
 
 $default_userprofile_path = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\" -Name Default).Default
+
+
+
+#EDIT 2: The warning badge on the "Security Center" icon when signing in with a local account can be disabled in the Default User Profile registry hive with a DWORD 0 @ SOFTWARE\Microsoft\Windows Security Health\State\AccountProtection_MicrosoftAccount_Disconnected.

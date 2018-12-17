@@ -21,8 +21,6 @@ trap {
     exit 1
 }
 
-# TODO: Test this
-
 function Add-RegDWord {
     param (
         [Parameter(Mandatory=$true)]
@@ -53,8 +51,7 @@ Add-RegDWord $s "ConnectedSearchUseWeb" 0
 Add-RegDWord $s "DisableWebSearch" 1
 
 # Disabling Microsoft Edge desktop icon creation
-$e = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer'
-Add-RegDWord $e 'DisableEdgeDesktopShortcutCreation'
+Add-RegDWord 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer' 'DisableEdgeDesktopShortcutCreation'
 
 # Disabling New Network Dialog
 New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Network' -Name 'NewNetworkWindowOff' -Force

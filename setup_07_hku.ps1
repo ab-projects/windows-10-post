@@ -45,52 +45,59 @@ function Add-RegDWord {
 New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
 
 # Get default user profile path
-$default_userprofile = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\" -Name Default).Default
+$default_userprofile = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList" -Name 'Default').Default
 # Load default user hive
 reg load 'HKU\DEFAULT' (Join-Path $default_userprofile 'NTUSER.DAT')
 
-New-ItemProperty -Path 'HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' -Name 'PreInstalledAppsEnabled' -Value 0 -Force
-New-ItemProperty -Path 'HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' -Name 'OemPreInstalledAppsEnabled' -Value 0 -Force
+Add-RegDWord 'HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'SystemPaneSuggestionsEnabled' 0
+Add-RegDWord 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'SystemPaneSuggestionsEnabled' 0
+
+Add-RegDWord 'HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'PreInstalledAppsEnabled' 0
+Add-RegDWord 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'PreInstalledAppsEnabled' 0
+
+Add-RegDWord 'HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'OemPreInstalledAppsEnabled' 0
+Add-RegDWord 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'OemPreInstalledAppsEnabled' 0
+
+# Privacy: Let apps use my advertising ID: Disable
+Add-RegDWord "HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" "Enabled" 0
+Add-RegDWord "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" "Enabled" 0
+
+# Start Menu: Disable Bing Search Results
+Add-RegDWord 'HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' 'BingSearchEnabled' 0
+Add-RegDWord 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search' 'BingSearchEnabled' 0
+
+# These make "Quick Access" behave much closer to the old "Favorites"
+$explorer_hku = "HKU:\DEFAULT\Software\Microsoft\Windows\CurrentVersion\Explorer"
+$explorer_hkcu = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer"
+# Disable Quick Access: Recent Files
+Add-RegDWord $explorer_hku 'ShowRecent' 0
+Add-RegDWord $explorer_hkcu 'ShowRecent' 0
+# Disable Quick Access: Frequent Folders
+Add-RegDWord $explorer_hku 'ShowFrequent' 0
+Add-RegDWord $explorer_hkcu 'ShowFrequent' 0
+
+# Better File Explorer
+$advanced_hku = Join-Path $explorer_hku "Advanced"
+$advanced_hkcu = Join-Path $explorer_hkcu "Advanced"
+
+Add-RegDWord $advanced_hku 'NavPaneExpandToCurrentFolder' 1
+Add-RegDWord $advanced_hkcu 'NavPaneExpandToCurrentFolder' 1
+Add-RegDWord $advanced_hku 'NavPaneShowAllFolders' 1
+Add-RegDWord $advanced_hkcu 'NavPaneShowAllFolders' 1
+Add-RegDWord $advanced_hku 'MMTaskbarMode' 2
+Add-RegDWord $advanced_hkcu 'MMTaskbarMode' 2
+
+# Disable Xbox Gamebar
+Add-RegDWord "HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" 'AppCaptureEnabled' 0
+Add-RegDWord "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" 'AppCaptureEnabled' 0
+
+Add-RegDWord "HKU:\DEFAULT\System\GameConfigStore" 'GameDVR_Enabled' 0
+Add-RegDWord "HKCU:\System\GameConfigStore" 'GameDVR_Enabled' 0
+
+# Turn off People in Taskbar
+Add-RegDWord "HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" 'PeopleBand' 0
+Add-RegDWord "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" 'PeopleBand' 0
 
 # unload default user hive
 reg unload 'HKU\DEFAULT'
 Remove-PSDrive -Name HKU
-
-# Privacy: Let apps use my advertising ID: Disable
-$adv_info = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo"
-if ( -not ( Test-Path $adv_info ) ) {
-    New-Item -Path $adv_info | Out-Null
-}
-Set-ItemProperty -Path $adv_info -Name Enabled -Type DWORD -Value 0
-
-# Start Menu: Disable Bing Search Results
-Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search -Name BingSearchEnabled -Type DWORD -Value 0
-
-# These make "Quick Access" behave much closer to the old "Favorites"
-$exp = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer"
-# Disable Quick Access: Recent Files
-Set-ItemProperty -Path $exp -Name ShowRecent -Type DWORD -Value 0
-# Disable Quick Access: Frequent Folders
-Set-ItemProperty -Path $exp -Name ShowFrequent -Type DWORD -Value 0
-
-# Better File Explorer
-$exp_adv = Join-Path $exp "Advanced"
-if ( -not ( Test-Path $exp_adv ) ) {
-    New-Item -Path $exp_adv | Out-Null
-}
-Set-ItemProperty -Path $exp_adv -Name NavPaneExpandToCurrentFolder -Value 1
-Set-ItemProperty -Path $exp_adv -Name NavPaneShowAllFolders -Value 1
-Set-ItemProperty -Path $exp_adv -Name MMTaskbarMode -Value 2
-
-# Disable Xbox Gamebar
-Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" -Name AppCaptureEnabled -Type DWORD -Value 0
-Set-ItemProperty -Path "HKCU:\System\GameConfigStore" -Name GameDVR_Enabled -Type DWORD -Value 0
-
-# Turn off People in Taskbar
-$people = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People"
-if ( -not ( Test-Path $people ) ) {
-    New-Item -Path $people | Out-Null
-}
-Set-ItemProperty -Path $people -Name PeopleBand -Type DWORD -Value 0
-
-Remove-Item -Recurse -Force $env:USERPROFILE"\3D Objects"

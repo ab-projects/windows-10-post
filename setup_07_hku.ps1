@@ -23,6 +23,24 @@ trap {
     exit 1
 }
 
+function Add-RegDWord {
+    param (
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $Path,
+        [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string] $PropertyName,
+        [Parameter(Mandatory=$false)]
+        [int] $Value = 1
+    )
+    if ( -not ( Test-Path $Path ) ) {
+        $Path
+        New-Item -Path $Path -Force | Out-Null
+    }
+    New-ItemProperty -Path $Path -Name $PropertyName -PropertyType DWORD -Value $Value -Force
+}
+
 # Easy HKU access
 New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
 

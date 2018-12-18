@@ -1,4 +1,5 @@
 #Requires -Version 3.0
+#Requires -RunAsAdministrator
 # -*- coding: utf-8 -*-
 
 param(

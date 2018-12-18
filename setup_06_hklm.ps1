@@ -124,5 +124,3 @@ Add-RegDWord (Join-Path $edge 'ServiceUI') 'ProvisionedHomePages' 0
 # Remove 3D-Objects from 'This PC'
 Remove-Item -Recurse -Force 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}'
 Remove-Item -Recurse -Force 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}'
-
-# TODO: More of those...

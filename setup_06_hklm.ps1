@@ -122,5 +122,12 @@ Add-RegDWord (Join-Path $edge 'SearchScopes') 'AllowWebContentOnNewTabPage' 0
 Add-RegDWord (Join-Path $edge 'ServiceUI') 'ProvisionedHomePages' 0
 
 # Remove 3D-Objects from 'This PC'
-Remove-Item -Recurse -Force 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}'
-Remove-Item -Recurse -Force 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}'
+
+$obj_32 = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}'
+if ( Test-Path $obj_32 ) {
+    Remove-Item -Recurse -Force $obj_32
+}
+$obj_64 = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}'
+if ( Test-Path $obj_64 ) {
+    Remove-Item -Recurse -Force $obj_64
+}

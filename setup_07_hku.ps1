@@ -50,6 +50,27 @@ $default_userprofile = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows
 # Load default user hive
 reg load 'HKU\DEFAULT' (Join-Path $default_userprofile 'NTUSER.DAT')
 
+Add-RegDWord 'HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\PushNotifications' 'NoTileApplicationNotification' 1
+Add-RegDWord 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\PushNotifications' 'NoTileApplicationNotification' 1
+
+Add-RegDWord 'HKU:\DEFAULT\Software\Microsoft\Personalization\Settings' 'AcceptedPrivacyPolicy' 0
+Add-RegDWord 'HKCU:\Software\Microsoft\Personalization\Settings' 'AcceptedPrivacyPolicy' 0
+
+Add-RegDWord 'HKU:\DEFAULT\Software\Microsoft\InputPersonalization\TrainedDataStore' 'HarvestContacts' 0
+Add-RegDWord 'HKCU:\Software\Microsoft\InputPersonalization\TrainedDataStore' 'HarvestContacts' 0
+
+Add-RegDWord 'HKU:\DEFAULT\Software\Microsoft\Siuf\Rules' 'PeriodInNanoSeconds' 0
+Add-RegDWord 'HKCU:\Software\Microsoft\Siuf\Rules' 'PeriodInNanoSeconds' 0
+
+Add-RegDWord 'HKU:\DEFAULT\Software\Microsoft\Siuf\Rules' 'NumberOfSIUFInPeriod' 0
+Add-RegDWord 'HKCU:\Software\Microsoft\Siuf\Rules' 'NumberOfSIUFInPeriod' 0
+
+Add-RegDWord 'HKU:\DEFAULT\SOFTWARE\Microsoft\Messaging' 'CloudServiceSyncEnabled' 0
+Add-RegDWord 'HKCU:\SOFTWARE\Microsoft\Messaging' 'CloudServiceSyncEnabled' 0
+
+Add-RegDWord 'HKU:\DEFAULT\SOFTWARE\Policies\Microsoft\Windows\CloudContent' 'DisableWindowsSpotlightFeatures' 1
+Add-RegDWord 'HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent' 'DisableWindowsSpotlightFeatures' 1
+
 Add-RegDWord 'HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'SystemPaneSuggestionsEnabled' 0
 Add-RegDWord 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager' 'SystemPaneSuggestionsEnabled' 0
 

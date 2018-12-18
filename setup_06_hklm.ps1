@@ -33,11 +33,11 @@ function Add-RegDWord {
         [Parameter(Mandatory=$false)]
         [int] $Value = 1
     )
+    Write-Output "Create $Path\$PropertyName = $Value"
     if ( -not ( Test-Path $Path ) ) {
-        $Path
         New-Item -Path $Path -Force | Out-Null
     }
-    New-ItemProperty -Path $Path -Name $PropertyName -PropertyType DWORD -Value $Value -Force
+    New-ItemProperty -Path $Path -Name $PropertyName -PropertyType DWORD -Value $Value -Force | Out-Null
 }
 
 # Disable Live Tiles

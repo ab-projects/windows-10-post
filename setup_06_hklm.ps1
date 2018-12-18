@@ -57,13 +57,6 @@ Add-RegDWord 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer' 'Disable
 # Disabling New Network Dialog
 New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Network' -Name 'NewNetworkWindowOff' -Force
 
-# Wifi sense
-$wifi = 'HKLM:\Software\Microsoft\PolicyManager\default\WiFi'
-# Disable HotSpot Sharing
-Add-RegDWord (Join-Path $wifi 'AllowWiFiHotSpotReporting') 'value' 0
-# Disable Shared HotSpot Auto-Connect
-Add-RegDWord (Join-Path $wifi 'AllowAutoConnectToWiFiSenseHotspots') 'value' 0
-
 # Disabling the Microsoft Account Sign-In Assistant
 Add-RegDWord 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' 'NoConnectedUser' 3
 

@@ -32,7 +32,7 @@ function Add-ToReg {
         [string] $PropertyName,
         [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [int] $Value
+        $Value
     )
     Write-Output "Create $Path\$PropertyName = $Value"
     if ( -not ( Test-Path $Path ) ) {

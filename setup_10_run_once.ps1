@@ -35,6 +35,15 @@ $ns.AddNamespace("start", "http://schemas.microsoft.com/Start/2014/StartLayout")
 $xml.SelectNodes("//start:SecondaryTile", $ns) | % { $_.ParentNode.RemoveChild($_) | Out-Null }
 $xml.Save($xml_path)
 
+$to_remove = @(
+    (Join-Path $default_userprofile 'Saved Games')
+)
+foreach ($item in $_to_remove) {
+    if ( Test-Path $item ) {
+        Remove-Item -Recurse -Force $item
+    }
+}
+
 # Easy HKU access
 New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
 # Load default user hive

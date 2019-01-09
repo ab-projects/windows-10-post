@@ -29,11 +29,11 @@ $default_userprofile = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows
 $xml_path = Join-Path $default_userprofile 'AppData\Local\Microsoft\Windows\Shell\DefaultLayouts.xml'
 $xml = New-Object xml
 $xml.PreserveWhitespace = $true
-$xml.Load(xml_path)
+$xml.Load($xml_path)
 $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
 $ns.AddNamespace("start", "http://schemas.microsoft.com/Start/2014/StartLayout")
 $xml.SelectNodes("//start:SecondaryTile", $ns) | % { $_.ParentNode.RemoveChild($_) | Out-Null }
-$xml.Save(xml_path)
+$xml.Save($xml_path)
 
 # Easy HKU access
 New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
@@ -50,9 +50,13 @@ $run_once_path_src = Join-Path $myParentDir $run_once_file
 $run_once_path_dst = Join-Path $run_once_path_folder $run_once_file
 Copy-Item -Path $run_once_path_src -Destination $run_once_path_dst -Force
 
-$run_once = 'HKU:\DEFAULT\Software\Microsoft\Windows\CurrentVersion\RunOnce'
-New-Item -Path $run_once -Force | Out-Null
-New-ItemProperty -Path $run_once -Force -Name '!run_once' -Value "powershell -NoProfile -WindowStyle Hidden -File $run_once_path_dst"
+$run_once_hku = 'HKU:\DEFAULT\Software\Microsoft\Windows\CurrentVersion\RunOnce'
+New-Item -Path $run_once_hku -Force | Out-Null
+New-ItemProperty -Path $run_once_hku -Force -Name '!run_once' -Value "powershell -NoProfile -WindowStyle Hidden -File $run_once_path_dst"
+
+$run_once_hkcu = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\RunOnce'
+New-Item -Path $run_once_hkcu -Force | Out-Null
+New-ItemProperty -Path $run_once_hkcu -Force -Name '!run_once' -Value "powershell -NoProfile -WindowStyle Hidden -File $run_once_path_dst"
 
 # unload default user hive
 [System.GC]::Collect()

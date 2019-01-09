@@ -22,12 +22,5 @@ trap {
     exit 1
 }
 
-$cu_obj = Join-Path $env:USERPROFILE '3D Objects'
-if ( Test-Path $cu_obj ) {
-    Remove-Item -Recurse -Force $cu_obj
-}
-
-$cu_edge = Join-Path $env:USERPROFILE 'Desktop\Microsoft Edge.lnk'
-if ( Test-Path $cu_edge ) {
-    Remove-Item -Recurse -Force $cu_edge
-}
+# Do all the things specified in run_once.ps1
+& ( Join-Path $myParentDir 'run_once.ps1' )

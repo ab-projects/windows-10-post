@@ -123,6 +123,10 @@ Add-RegDWord "HKCU:\System\GameConfigStore" 'GameDVR_Enabled' 0
 Add-RegDWord "HKU:\DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" 'PeopleBand' 0
 Add-RegDWord "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" 'PeopleBand' 0
 
+# disable warning badge in the security center for local accounts
+Add-RegDWord "HKU:\DEFAULT\SOFTWARE\Microsoft\Windows Security Health\State" 'AccountProtection_MicrosoftAccount_Disconnected' 0
+Add-RegDWord "HKCU:\SOFTWARE\Microsoft\Windows Security Health\State" 'AccountProtection_MicrosoftAccount_Disconnected' 0
+
 # unload default user hive
 [System.GC]::Collect()
 reg unload 'HKU\DEFAULT'

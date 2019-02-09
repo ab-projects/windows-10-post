@@ -34,4 +34,4 @@ choco install -y 7zip
 
 # apps level
 choco install -y googlechrome
-choco install -y git --params '"/GitAndUnixToolsOnPath /WindowsTerminal /NoAutoCrlf /NoShellIntegration /SChannel /NoCredentialManager"'
+choco install -y git --params '"/GitAndUnixToolsOnPath" "/WindowsTerminal" "/NoAutoCrlf" "/NoShellIntegration" "/SChannel" "/NoCredentialManager"'

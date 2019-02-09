@@ -102,6 +102,8 @@ Add-RegDWord $explorer_hkcu 'ShowFrequent' 0
 $advanced_hku = Join-Path $explorer_hku "Advanced"
 $advanced_hkcu = Join-Path $explorer_hkcu "Advanced"
 
+Add-RegDWord $advanced_hku 'HideFileExt' 0
+Add-RegDWord $advanced_hkcu 'HideFileExt' 0
 Add-RegDWord $advanced_hku 'NavPaneExpandToCurrentFolder' 1
 Add-RegDWord $advanced_hkcu 'NavPaneExpandToCurrentFolder' 1
 Add-RegDWord $advanced_hku 'NavPaneShowAllFolders' 1
